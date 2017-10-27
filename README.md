@@ -7,3 +7,4 @@
 ## Contents
 
 - lab3_I2C_ADXL345
+- BLE on RPi3
