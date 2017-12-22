@@ -63,7 +63,10 @@ def craw_hot():
                 tmp.append(item.text)
         a['article'] = tmp
     print("Crawl hot news done!!!")
-
+    ## return format : 
+    #   all news in a dict
+    #   {'rank','title','href','article'}
+    return hot_news
 
 if __name__ == '__main__':
     craw_hot()    

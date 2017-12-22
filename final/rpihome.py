@@ -1,7 +1,9 @@
 import time
 import recognition
-
+import news_crawer
+import weather_crawer
 ###
+DEBUG = 1
 state = 'wait'
 cmd = ''
 # wait, start_hearing
@@ -28,6 +30,8 @@ def main():
 
 if __name__ == '__main__':
     while Ture:
+        print(">>>> state : {}".format(state))
+        print(">>>> recogn : {}".format(cmd))
         if state = 'wait':
             ## listen
             cmd = recognition.rec()
