@@ -12,6 +12,7 @@ city_dict = {'台北市':'Taipei_City', '臺北市':'Taipei_City','基隆市':'K
 ###
 
 
+
 def get_weather(name):
     city = city_dict[name]
     qurl = url + 'taiwan/' + city + '.htm'
@@ -19,7 +20,7 @@ def get_weather(name):
     resp = requests.get(qurl)  
     resp.encoding = 'utf-8'
     soup = BeautifulSoup(resp.text, 'html5lib')
-    dom = soup.find("table",at，trs={'class':"FcstBoxTable01"})
+    dom = soup.find("table",attrs={'class':"FcstBoxTable01"})
     tables = dom.find_all('tr')
     weat_res = []
     for item in tables:
@@ -33,7 +34,7 @@ def get_weather(name):
     rnt = []
     rnt.append( "{}的天氣預報如下".format(weat_res[0][0]) )
     weat_res.remove(weat_res[0])
-    for item in weat_res:，
+    for item in weat_res:
         temperature = item[1].split(' ')
         temperature = [temperature[0],temperature[2]]
         rainrate = item[3].split(' ')[0]
