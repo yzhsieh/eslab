@@ -30,4 +30,4 @@ def t2speech(txt):
     os.system('mpv temp.mp3')
     os.remove('temp.mp3')
 
-t2speech("忠孝東路走九遍")
+#t2speech("忠孝東路走九遍")

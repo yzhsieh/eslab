@@ -41,6 +41,7 @@ def get_weather(name):
         mystr = "{}的氣溫為{}到{}度，降雨機率為百分之{}".format(item[0],temperature[0],temperature[1],rainrate)
         print(mystr)
         rnt.append( mystr )
+    rnt = '，'.join(rnt)
     return rnt
 if __name__ == '__main__':
     get_weather("台北市")
