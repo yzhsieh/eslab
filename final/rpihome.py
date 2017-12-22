@@ -45,6 +45,7 @@ def main():
             print(">>>> command : {}".format(cmd))
             state = 'craw_weather'
             for it in city_dict:
+            print("")
                 if it in cmd:
                     sstr = weather_crawer.get_weather(it)
                     break
