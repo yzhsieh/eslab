@@ -2,6 +2,10 @@ import time
 import recognition
 import news_crawer
 import weather_crawer
+try:
+    import Adafruit_DHT
+except ImportError:
+    print("WEARNING : tempature and humity measure does not online")
 ###
 DEBUG = 1
 state = 'wait'
@@ -13,7 +17,9 @@ cmd = ''
 city_dict = {'台北市':'Taipei_City', '臺北市':'Taipei_City','基隆市':'Keelung_City', '新竹市':"Hsinchu_City",'新北市':"New_Taipei_City",
              '桃園市':'Taoyuan_City' }
 
-
+def getTempAndHumity():
+    h, t = Adafruit_DHT.read_rentry(sensor, pin)
+    sstr = "現在的溫度是{:0.1f}度，濕度是百分之{:0.1f}".format(h,t)
 def getCTime():
     now = time.localtime()
     mon = now[1]
