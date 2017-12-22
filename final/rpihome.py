@@ -20,6 +20,7 @@ city_dict = {'台北市':'Taipei_City', '臺北市':'Taipei_City','基隆市':'K
 def getTempAndHumity():
     h, t = Adafruit_DHT.read_rentry(sensor, pin)
     sstr = "現在的溫度是{:0.1f}度，濕度是百分之{:0.1f}".format(h,t)
+    return sstr
 def getCTime():
     now = time.localtime()
     mon = now[1]
