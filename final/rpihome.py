@@ -2,10 +2,7 @@ import time
 import recognition
 import news_crawer
 import weather_crawer
-try:
-    import Adafruit_DHT
-except ImportError:
-    print("WEARNING : tempature and humity measure does not online")
+import subprocess
 ###
 DEBUG = 1
 state = 'wait'
@@ -18,9 +15,14 @@ city_dict = {'台北市':'Taipei_City', '臺北市':'Taipei_City','基隆市':'K
              '桃園市':'Taoyuan_City' }
 
 def getTempAndHumity():
-    h, t = Adafruit_DHT.read_rentry(sensor, pin)
-    sstr = "現在的溫度是{:0.1f}度，濕度是百分之{:0.1f}".format(h,t)
+    tmp = subprocess.call(['sudo', 'cat', '/dev/dht11'])
+    tmp = tmp.split('\n')
+    hum = tmp[0][-4:]
+    temp = tmp[1][-4:]
+    sstr = "現在的氣溫為{}度，濕度為百分之{}".format(hum, temp)
+    print(sstr)
     return sstr
+
 def getCTime():
     now = time.localtime()
     mon = now[1]
@@ -63,11 +65,17 @@ def main():
             state = 'wait'
             ## call craw_weather
         elif "現在" in cmd:
-            state = 'getCTime'
-            sstr = getCTime()
-            recognition.t2speech(sstr)
-            cmd = ''
-            state = 'wait'
+            if "時間" in cmd:
+                state = 'getCTime'
+                sstr = getCTime()
+                recognition.t2speech(sstr)
+                cmd = ''
+                state = 'wait'
+            elif "氣溫" in cmd or "溫度" in cmd or "溫濕度" in cmd:
+                sstr = getTempAndHumity()
+                recognition.t2speech(sstr)
+                cmd = ''
+                state = 'wait'
 
         elif "新聞" in cmd:
             state = "craw_news"
