@@ -2,7 +2,6 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-import pandas as pd
 import datetime
 ###
 url = 'https://tw.appledaily.com/daily'
@@ -32,7 +31,7 @@ def find_dep_list():
         dep_list.append(item.text)
     # print(dep_list)
 
-def craw_hot():
+def craw_hot(num = 10):
     resp = requests.get("https://tw.appledaily.com/hot/daily")  
     # resp.encoding = 'utf-8'
     soup = BeautifulSoup(resp.text, 'html5lib')
@@ -46,6 +45,8 @@ def craw_hot():
         tmp['title'] = tdom.a.text
         tmp['href'] = tdom.a['href']
         hot_news.append(tmp)
+        if cnt == 10:
+            break
     # dom = soup.find("table",attrs={'class':"FcstBoxTable01"})
 
     for a in hot_news:

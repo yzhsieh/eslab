@@ -15,11 +15,11 @@ city_dict = {'台北市':'Taipei_City', '臺北市':'Taipei_City','基隆市':'K
              '桃園市':'Taoyuan_City' }
 
 def getTempAndHumity():
-    tmp = subprocess.call(['sudo', 'cat', '/dev/dht11'])
-    tmp = tmp.split('\n')
-    hum = tmp[0][-4:]
-    temp = tmp[1][-4:]
-    sstr = "現在的氣溫為{}度，濕度為百分之{}".format(hum, temp)
+    tmp = str(subprocess.check_output(['sudo', 'cat', '/dev/DHT11']))
+    tmp = tmp.split('\\n')
+    hum = tmp[0][-5:-1]
+    temp = tmp[1][-5:-1]
+    sstr = "現在的氣溫為攝氏{}度，濕度為百分之{}".format(temp, hum)
     print(sstr)
     return sstr
 
@@ -81,8 +81,12 @@ def main():
             state = "craw_news"
             sstr = news_crawer.craw_hot()
             recognition.t2speech("以下為今日的熱門新聞")
+            tmp = []
             for it in sstr:
-                recognition.t2speech("{}，，{}".format(it['rank'], it['title']))
+                tmp.append(str(it['rank']) + '，' + it['title'])
+                # recognition.t2speech("{}，，{}".format(it['rank'], it['title']))
+            tmp = '，，'.join(tmp)
+            recognition.t2speech(tmp)
             state = 'wait'
         elif "播放" in cmd:
             state = "craw_music"
