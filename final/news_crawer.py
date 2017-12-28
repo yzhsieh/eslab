@@ -45,7 +45,7 @@ def craw_hot(num = 10):
         tmp['title'] = tdom.a.text
         tmp['href'] = tdom.a['href']
         hot_news.append(tmp)
-        if cnt == 10:
+        if cnt == num:
             break
     # dom = soup.find("table",attrs={'class':"FcstBoxTable01"})
 
