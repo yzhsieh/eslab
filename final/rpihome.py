@@ -11,8 +11,11 @@ cmd = ''
 # craw_weather, craw_news
 ###            state = 'wait'
 
-city_dict = {'台北市':'Taipei_City', '臺北市':'Taipei_City','基隆市':'Keelung_City', '新竹市':"Hsinchu_City",'新北市':"New_Taipei_City",
-             '桃園市':'Taoyuan_City' }
+city_dict = {'台北':'Taipei_City', '台北市':'Taipei_City','基隆市':'Keelung_City', '新竹市':"Hsinchu_City", '新竹':"Hsinchu_City",'新北市':"New_Taipei_City",
+             '桃園市':'Taoyuan_City', '新竹縣':'Hsinchu_County', '苗栗':'Miaoli_County','台中':'Taichung_City','彰化':"Changhua_County",
+             '南投':'Nantou_County', '雲林':'Yunlin_County', '嘉義市':'Chiayi_City', '嘉義':'Chiayi_City', '嘉義縣':'Chiayi_County',
+             '宜蘭':'Yilan_County', '花蓮':'Hualien_County', '台東':'Taitung_County', '台南':'Tainan_City', '高雄':'Kaohsiung_City', '屏東':'Pingtung_County',
+             '連江':'Lienchiang_County', '金門':'Kinmen_County', '澎湖':'Penghu_County' }
 
 def getTempAndHumity():
     subprocess.call(['sudo', 'insmod', './dht11.ko'])
