@@ -41,6 +41,7 @@ def getCTime():
     return rnt
 
 def main():
+    getTempAndHumity()
     global state
     global cmd
     while True:
