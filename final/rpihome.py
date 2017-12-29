@@ -15,6 +15,7 @@ city_dict = {'台北市':'Taipei_City', '臺北市':'Taipei_City','基隆市':'K
              '桃園市':'Taoyuan_City' }
 
 def getTempAndHumity():
+    subprocess.call(['sudo', 'insmod', './dht11.ko'])
     tmp = str(subprocess.check_output(['sudo', 'cat', '/dev/DHT11']))
     tmp = tmp.split('\\n')
     hum = tmp[0][-5:-1]
