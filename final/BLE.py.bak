@@ -1,0 +1,53 @@
+from bluepy.btle import UUID, Peripheral
+import time
+import pygatt
+
+
+###
+ADDRESS_TYPE = pygatt.BLEAddressType.random
+###
+
+if __name__ == '__main__':
+	print("START")
+	adapter = pygatt.GATTToolBackend()
+
+	try:
+	    adapter.start()
+	    device = adapter.connect('D5:3A:73:E3:F0:7E',address_type=ADDRESS_TYPE)
+	    # value = device.char_read("a1e8f5b1-696b-4e4c-87c6-69dfe0b0093b")
+	    tmp = device.discover_characteristics()
+	    for a in tmp:
+	    	print(a)
+	    device.char_write_handle(14,[0x53,4,1])
+	    print("writed")
+	finally:
+	    adapter.stop()
+	    print("stop connect")
+	print("DONE")
+
+	'''
+	print("Start")
+	BLE = Peripheral('D5:3A:73:E3:F0:7E',"random")
+	print("Connected!!")
+	# RXService=BLE.getServiceByUUID(RX_UUID)
+	chlist = BLE.getCharacteristics()
+	for a in chlist:
+		print(a)
+	ch = chlist[4]
+	print(ch)
+	services = BLE.getServices()
+	ch.write('S'.encode('utf-8'))
+	# BLE.writeCharacteristic(14, '54'.encode('utf-8'))
+	# BLE.writeCharacteristic(14, b'3')
+	# BLE.writeCharacteristic(14, b'1')
+	print("start test")
+	while 0:
+		BLE.writeCharacteristic(14, b'0x540301')
+		time.sleep(1)
+		BLE.writeCharacteristic(14, b'0x540300')
+		time.sleep(1)
+
+	for ser in services:
+		print(ser)
+	print('Done')
+	'''
