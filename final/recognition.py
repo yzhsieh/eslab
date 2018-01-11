@@ -38,6 +38,6 @@ def get_noise(source,thr=25000):
         energy = audioop.rms(buffer, source.SAMPLE_WIDTH)  # energy of the audio signal
         n = energy
         if n > thr:
-            print(n)
+            return true
 
 #t2speech("忠孝東路走九遍")
