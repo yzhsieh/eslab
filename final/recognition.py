@@ -32,6 +32,11 @@ def t2speech(txt):
     os.remove('temp.mp3')
 
 
+def save_speech(txt, filename):
+    tts =  gTTS(text=txt,lang='zh-TW')
+    tts.save('{}.mp3'.format(filename))
+
+
 def get_noise(source,thr=25000):
     while True:
         buffer = source.stream.read(source.CHUNK)
@@ -40,4 +45,6 @@ def get_noise(source,thr=25000):
         if n > thr:
             return true
 
-#t2speech("忠孝東路走九遍")
+
+if __name__ == '__main__':
+    save_speech('不好意思，請你再說一次','sayagain')
