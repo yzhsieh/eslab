@@ -6,23 +6,32 @@ from os import path
 import speech_recognition as sr
 from gtts import gTTS
 import audioop
+import RPi.GPIO as GPIO 
+GPIO.setmode(GPIO.BOARD) ## Use board pin numbering
+
 
 def rec():
+    GPIO.setup(7, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
     r = sr.Recognizer()
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source)
         print('Say something!')
+        GPIO.output(7,True) ## Turn on GPIO pin 7
         audio = r.listen(source)
+        
 
     try:
         sttTXT_org = r.recognize_google(audio, language = 'zh-TW')
         print("Google Speech Recognition thinks you said: " + sttTXT_org)
+        GPIO.output(7,False)## Switch off pin 7
         return sttTXT_org
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
+        GPIO.output(7,False)## Switch off pin 7
         return 0
     except sr.RequestError as e:
         print('Could not request results from Google Speech Recognition service; {0}'.format(e))
+        GPIO.output(7,False)## Switch off pin 7
         return 0
 
 def t2speech(txt):
