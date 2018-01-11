@@ -3,6 +3,7 @@ import recognition
 import news_crawer
 import weather_crawer
 import subprocess
+import pexpect
 ###
 DEBUG = 1
 state = 'wait'
@@ -10,12 +11,17 @@ cmd = ''
 # wait, start_hearing
 # craw_weather, craw_news
 ###            state = 'wait'
-
+news_archive = {}
 city_dict = {'台北':'Taipei_City', '台北市':'Taipei_City','基隆市':'Keelung_City', '新竹市':"Hsinchu_City", '新竹':"Hsinchu_City",'新北市':"New_Taipei_City",
              '桃園市':'Taoyuan_City', '新竹縣':'Hsinchu_County', '苗栗':'Miaoli_County','台中':'Taichung_City','彰化':"Changhua_County",
              '南投':'Nantou_County', '雲林':'Yunlin_County', '嘉義市':'Chiayi_City', '嘉義':'Chiayi_City', '嘉義縣':'Chiayi_County',
              '宜蘭':'Yilan_County', '花蓮':'Hualien_County', '台東':'Taitung_County', '台南':'Tainan_City', '高雄':'Kaohsiung_City', '屏東':'Pingtung_County',
              '連江':'Lienchiang_County', '金門':'Kinmen_County', '澎湖':'Penghu_County' }
+
+def play_music_from_youtube(name):
+    cmd = 'tizonia --youtube-audio-search {}'.format(name)
+    # speaker = pexpect.spawn(cmd,logfile=None, searchwindowsize=200)
+    speaker = subprocess.Popen(['tizonia', '--youtube-audio-search', name])
 
 def getTempAndHumity():
     subprocess.call(['sudo', 'insmod', './dht11.ko'])
@@ -44,9 +50,10 @@ def getCTime():
     return rnt
 
 def main():
-    getTempAndHumity()
+    global news_archive
     global state
     global cmd
+    getTempAndHumity()
     while True:
         print(">>>> state : {}".format(state))
         print(">>>> command : {}".format(cmd))
@@ -85,6 +92,7 @@ def main():
         elif "新聞" in cmd:
             state = "craw_news"
             sstr = news_crawer.craw_hot()
+            news_archive = sstr
             recognition.t2speech("以下為今日的熱門新聞")
             tmp = []
             for it in sstr:
@@ -99,6 +107,11 @@ def main():
         elif "關機" in cmd or "掰掰" in cmd:
             recognition.t2speech("掰掰")
             break
+        elif "歌" in cmd:
+            recognition.t2speech("請問你要播什麼歌")
+            quer = recognition.rec()
+            print(quer)
+            play_music_from_youtube(quer)
         else:
             print("cmd is none of anyone")
             print("cmd :",cmd)
