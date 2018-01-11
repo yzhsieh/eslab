@@ -7,6 +7,8 @@ import pexpect
 import BLE
 import util
 import signal
+import os
+import RPi.GPIO as GPIO 
 ###
 DEBUG = 0
 cmd = ''
@@ -20,6 +22,7 @@ city_dict = {'台北':'Taipei_City', '台北市':'Taipei_City','基隆市':'Keel
              '連江':'Lienchiang_County', '金門':'Kinmen_County', '澎湖':'Penghu_County' }
 fanDevice = None
 SoundLevel = 15
+CurrentTemp = None
 ###
 def play_music_from_youtube(name):
     cmd = 'tizonia --youtube-audio-search {}'.format(name)
@@ -38,6 +41,14 @@ def getTempAndHumity():
     sstr = "現在的氣溫為攝氏{}度，濕度為百分之{}".format(temp, hum)
     print(sstr)
     return sstr
+
+def getTemp():
+    subprocess.call(['sudo', 'insmod', './dht11.ko'])
+    tmp = str(subprocess.check_output(['sudo', 'cat', '/dev/DHT11']))
+    tmp = tmp.split('\\n')
+    hum = tmp[0][-5:-1]
+    temp = tmp[1][-5:-1]
+    return float(temp)
 
 def getCTime():
     now = time.localtime()
@@ -58,16 +69,29 @@ def getCTime():
 def main():
     global news_archive
     global cmd
-    global SoundLevel
-    getTempAndHumity()
+    global SoundLevel, CurrentTemp
+    # getTempAndHumity()
     ### initialize
     fanDevice = BLE.BLEdevice()
+    CurrentTemp = getTemp()
     util.ChangeSoundLevel(SoundLevel)
+    GPIO.setmode(GPIO.BOARD) ## Use board pin numbering
+    GPIO.setup(37, GPIO.OUT) ## Setup GPIO Pin 7 to OUT
     ###
+    print("Current temp is {}".format(CurrentTemp))
     print("initialize done")
     while True:
         print(">>>> command : {}".format(cmd))
         while True:
+            if fanDevice.fanPower == 'on':
+                tmpTemp = getTemp()
+                if tmpTemp - CurrentTemp > 1.0:
+                    os.system('mpv ./sounds/tempup.mp3')
+                    fanDevice.speedUpFan()
+                elif CurrentTemp - tmpTemp > 1.0:
+                    os.system('mpv ./sounds/tempdown.mp3')
+                    fanDevice.speedDownFan()
+
             ## listen
             if DEBUG:
                 print("DEBUG is on, please type your command")
@@ -146,7 +170,7 @@ def main():
         else:
             print("cmd is none of anyone")
             print("cmd :",cmd)
-            os.system('mpv sayagain.mp3')
+            os.system('mpv ./sounds/sayagain.mp3')
         cmd=''
         #time.sleep(1)
 

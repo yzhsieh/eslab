@@ -16,7 +16,7 @@ def rec():
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source)
         print('Say something!')
-        GPIO.output(7,True) ## Turn on GPIO pin 7
+        GPIO.output(37,True) ## Turn on GPIO pin 7
         audio = r.listen(source)
         
 
