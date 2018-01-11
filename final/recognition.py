@@ -5,6 +5,7 @@ import os
 from os import path
 import speech_recognition as sr
 from gtts import gTTS
+import audioop
 
 def rec():
     r = sr.Recognizer()
@@ -29,5 +30,14 @@ def t2speech(txt):
     tts.save('temp.mp3')
     os.system('mpv temp.mp3')
     os.remove('temp.mp3')
+
+
+def get_noise(source,thr=25000):
+    while True:
+        buffer = source.stream.read(source.CHUNK)
+        energy = audioop.rms(buffer, source.SAMPLE_WIDTH)  # energy of the audio signal
+        n = energy
+        if n > thr:
+            print(n)
 
 #t2speech("忠孝東路走九遍")
