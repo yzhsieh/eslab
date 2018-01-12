@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import datetime
+import recognition
 ###
 url = 'https://tw.appledaily.com/daily'
 hot_news = []
@@ -60,8 +61,13 @@ def craw_hot(num = 10):
         tmp = []
         for item in dom:
             if item.text != '':
-                tmp.append(item.text)
-        a['article'] = tmp
+                tmp.append(item.text.replace('\n',''))
+
+        alltext = '。'.join(tmp)
+        # for text in tmp:
+            # text.replace('\\n','')
+
+        a['article'] = alltext
     print("Crawl hot news done!!!")
     ## return format : 
     #   all news in a dict
@@ -69,4 +75,6 @@ def craw_hot(num = 10):
     return hot_news
 
 if __name__ == '__main__':
-    craw_hot()    
+    sstr = craw_hot(2)
+    print(sstr[0]['article'])
+    recognition.t2speech(sstr[0]['article'])

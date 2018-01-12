@@ -46,14 +46,17 @@ def save_speech(txt, filename):
     tts.save('{}.mp3'.format(filename))
 
 
-def get_noise(source,thr=25000):
+def get_noise(thr=25000):
     while True:
-        buffer = source.stream.read(source.CHUNK)
-        energy = audioop.rms(buffer, source.SAMPLE_WIDTH)  # energy of the audio signal
+        with sr.Microphone() as source:
+            buffer = source.stream.read(source.CHUNK)
+            energy = audioop.rms(buffer, source.SAMPLE_WIDTH)  # energy of the audio signal
         n = energy
+        print(n)
         if n > thr:
-            return true
+            return True
 
 
 if __name__ == '__main__':
-    save_speech('不好意思，請你再說一次','sayagain')
+    # save_speech('正在抓取熱門新聞，請稍等','./sounds/crawingnews')
+    save_speech('好的，正在建立串流，請稍等','./sounds/creatingstream')
