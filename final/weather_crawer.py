@@ -7,7 +7,7 @@ import datetime
 url = 'http://www.cwb.gov.tw/V7/forecast/'
 query_weather = '臺北市'
 # fill up the dict if have time
-city_dict = {'台北':'Taipei_City', '台北市':'Taipei_City','基隆市':'Keelung_City', '新竹市':"Hsinchu_City", '新竹':"Hsinchu_City",'新北市':"New_Taipei_City",
+city_dict = {'台北':'Taipei_City', '台北市':'Taipei_City','基隆市':'Keelung_City', '新竹市':"Hsinchu_City", '新竹':"Hsinchu_City",'新北':"New_Taipei_City",
              '桃園市':'Taoyuan_City', '新竹縣':'Hsinchu_County', '苗栗':'Miaoli_County','台中':'Taichung_City','彰化':"Changhua_County",
              '南投':'Nantou_County', '雲林':'Yunlin_County', '嘉義市':'Chiayi_City', '嘉義':'Chiayi_City', '嘉義縣':'Chiayi_County',
              '宜蘭':'Yilan_County', '花蓮':'Hualien_County', '台東':'Taitung_County', '台南':'Tainan_City', '高雄':'Kaohsiung_City', '屏東':'Pingtung_County',
@@ -41,10 +41,11 @@ def get_weather(name):
         temperature = [temperature[0],temperature[2]]
         rainrate = item[3].split(' ')[0]
         mystr = "{}的氣溫為{}到{}度，降雨機率為百分之{}".format(item[0],temperature[0],temperature[1],rainrate)
-        print(mystr)
+        # print(mystr)
         rnt.append( mystr )
     rnt = '，'.join(rnt)
+    print('\n',rnt)
     return rnt
 if __name__ == '__main__':
-    get_weather("台北市")
+    get_weather("高雄")
     

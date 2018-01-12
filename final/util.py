@@ -12,7 +12,7 @@ def SayCreatingStream():
 	print('[util] Say Creating Stream')
 	os.system("mpv ./sounds/creatingstream.mp3")
 
-def SayCrwaingNews():
+def SayCrawingNews():
 	print('[util] Say crawing news')
 	os.system("mpv ./sounds/crawingnews.mp3")
 

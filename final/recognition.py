@@ -59,4 +59,8 @@ def get_noise(thr=25000):
 
 if __name__ == '__main__':
     # save_speech('正在抓取熱門新聞，請稍等','./sounds/crawingnews')
-    save_speech('好的，正在建立串流，請稍等','./sounds/creatingstream')
+    # save_speech("已經是最大聲了",'./sounds/AlreadyMaxSound')
+    # save_speech("已經是最大聲了",'./sounds/AlreadyMinSound')
+    # save_speech("好的，已增加音量",'./sounds/IncreaseSound')
+    # save_speech("好的，已降低音量",'./sounds/DecreaseSound')
+    # save_speech('好的，正在建立串流，請稍等','./sounds/creatingstream')

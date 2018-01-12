@@ -144,7 +144,7 @@ def main():
 
         elif "新聞" in cmd:
             if news_archive == None:
-                util.SayCrwaingNews()
+                util.SayCrawingNews()
                 sstr = news_crawer.craw_hot()
                 news_archive = sstr
             if '第' in cmd:
@@ -189,15 +189,19 @@ def main():
             if SoundLevel != 80:
                 SoundLevel +=5
                 util.ChangeSoundLevel(SoundLevel)
+                os.system('mpv ./sounds/IncreaseSound.mp3')
             else:
-                recognition.t2speech("已經是最大聲了")
+                os.system('mpv ./sounds/AlreadyMaxSound.mp3')
+                # recognition.t2speech("已經是最大聲了")
 
         elif "小聲" in cmd:
             if SoundLevel != 5:
                 SoundLevel -=5
                 util.ChangeSoundLevel(SoundLevel)
+                os.system('mpv ./sounds/DecreaseSound.mp3')
             else:
-                recognition.t2speech("已經是最小聲了")
+                os.system('mpv ./sounds/AlreadyMinSound.mp3')                
+                # recognition.t2speech("已經是最小聲了")
         else:
             print("cmd is none of anyone")
             print("cmd :",cmd)
