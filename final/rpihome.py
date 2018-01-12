@@ -185,23 +185,24 @@ def main():
                 sstr = fanDevice.speedDownFan()
             if sstr != None:
                 recognition.t2speech(sstr)
-        elif "大聲" in cmd:
-            if SoundLevel != 80:
-                SoundLevel +=5
-                util.ChangeSoundLevel(SoundLevel)
-                os.system('mpv ./sounds/IncreaseSound.mp3')
-            else:
-                os.system('mpv ./sounds/AlreadyMaxSound.mp3')
-                # recognition.t2speech("已經是最大聲了")
+        elif "音量" in cmd or "聲音" in cmd:
+            if "大" in cmd or '高' in cmd:
+                if SoundLevel != 80:
+                    SoundLevel +=5
+                    util.ChangeSoundLevel(SoundLevel)
+                    os.system('mpv ./sounds/IncreaseSound.mp3')
+                else:
+                    os.system('mpv ./sounds/AlreadyMaxSound.mp3')
+                    # recognition.t2speech("已經是最大聲了")
 
-        elif "小聲" in cmd:
-            if SoundLevel != 5:
-                SoundLevel -=5
-                util.ChangeSoundLevel(SoundLevel)
-                os.system('mpv ./sounds/DecreaseSound.mp3')
-            else:
-                os.system('mpv ./sounds/AlreadyMinSound.mp3')                
-                # recognition.t2speech("已經是最小聲了")
+            elif "小" in cmd or "低" in cmd:
+                if SoundLevel != 5:
+                    SoundLevel -=5
+                    util.ChangeSoundLevel(SoundLevel)
+                    os.system('mpv ./sounds/DecreaseSound.mp3')
+                else:
+                    os.system('mpv ./sounds/AlreadyMinSound.mp3')                
+                    # recognition.t2speech("已經是最小聲了")
         else:
             print("cmd is none of anyone")
             print("cmd :",cmd)
