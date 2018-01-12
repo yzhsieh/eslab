@@ -64,3 +64,4 @@ if __name__ == '__main__':
     # save_speech("好的，已增加音量",'./sounds/IncreaseSound')
     # save_speech("好的，已降低音量",'./sounds/DecreaseSound')
     # save_speech('好的，正在建立串流，請稍等','./sounds/creatingstream')
+    print('hi')
